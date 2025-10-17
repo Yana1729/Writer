@@ -7,7 +7,9 @@
     "start": "electron ./src/main/main.js"
   },
   "dependencies": {
-    "docx": "^8.0.0",
-    "electron": "^31.0.0"
+    "docx": "^8.0.0"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
   }
 }
