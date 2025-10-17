@@ -6,3 +6,18 @@ section { padding: 16px 24px; }
 #projectPath { margin-left: 12px; font-weight: 600; }
 #status { margin-top: 12px; color: #555; }
 .actions { margin-bottom: 8px; display: flex; gap: 8px; }
+.tree ul {
+  list-style: none;
+  padding-left: 16px;
+}
+
+.tree li {
+  margin: 2px 0;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.tree li.selected {
+  background: #d0ebff;
+  border-radius: 4px;
+}
