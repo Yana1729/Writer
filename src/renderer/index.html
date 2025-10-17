@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Project Exporter</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header><h1>Экспорт кода проекта</h1></header>
+
+  <section>
+    <button id="btnPickFolder">Выбрать папку проекта</button>
+    <span id="projectPath"></span>
+  </section>
+
+  <section>
+    <button id="btnScan">Сканировать файлы</button>
+    <ul id="fileList"></ul>
+  </section>
+
+  <section>
+    <label><input type="radio" name="format" value="docx" checked /> DOCX</label>
+    <label><input type="radio" name="format" value="html" /> HTML</label>
+    <button id="btnExport">Экспорт</button>
+    <div id="status"></div>
+  </section>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>
