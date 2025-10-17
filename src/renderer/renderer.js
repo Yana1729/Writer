@@ -1,7 +1,3 @@
-import { scanFiles } from "../services/fileScanner.js";
-import { exportDocx } from "../services/exportDocx.js";
-import { exportHtml } from "../services/exportHtml.js";
-
 const btnPickFolder = document.getElementById("btnPickFolder");
 const projectPathEl = document.getElementById("projectPath");
 const btnScan = document.getElementById("btnScan");
@@ -38,37 +34,27 @@ btnPickFolder.addEventListener("click", async () => {
   renderList();
 });
 
-btnScan.addEventListener("click", () => {
+btnScan.addEventListener("click", async () => {
   if (!projectPath) {
     statusEl.textContent = "Сначала выбери папку проекта.";
     return;
   }
-  files = scanFiles(projectPath);
+  files = await window.api.scanFiles(projectPath);
   selected = new Set(files);
   renderList();
 });
 
 btnExport.addEventListener("click", async () => {
-  if (!projectPath) {
-    statusEl.textContent = "Нет папки проекта.";
-    return;
-  }
   const chosen = Array.from(selected);
-  if (chosen.length === 0) {
-    statusEl.textContent = "Не выбрано файлов.";
-    return;
-  }
   const format = document.querySelector("input[name='format']:checked").value;
   const suggested = `project_code.${format}`;
   const outputPath = await window.api.selectOutputFile(suggested);
-  if (!outputPath) {
-    statusEl.textContent = "Сохранение отменено.";
-    return;
-  }
+  if (!outputPath) return;
+
   if (format === "docx") {
-    await exportDocx(projectPath, chosen, outputPath);
+    await window.api.exportDocx(projectPath, chosen, outputPath);
   } else {
-    await exportHtml(projectPath, chosen, outputPath);
+    await window.api.exportHtml(projectPath, chosen, outputPath);
   }
   statusEl.textContent = `Готово: ${outputPath}`;
 });

@@ -1,6 +1,9 @@
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
+import { scanFiles } from "../services/fileScanner.js";
+import { exportDocx } from "../services/exportDocx.js";
+import { exportHtml } from "../services/exportHtml.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -39,4 +42,18 @@ ipcMain.handle("select-project-folder", async () => {
 ipcMain.handle("select-output-file", async (_, suggestedName) => {
   const result = await dialog.showSaveDialog({ defaultPath: suggestedName });
   return result.canceled ? null : result.filePath;
+});
+
+ipcMain.handle("scan-files", (_, projectPath) => {
+  return scanFiles(projectPath);
+});
+
+ipcMain.handle("export-docx", async (_, { projectPath, files, out }) => {
+  await exportDocx(projectPath, files, out);
+  return true;
+});
+
+ipcMain.handle("export-html", async (_, { projectPath, files, out }) => {
+  await exportHtml(projectPath, files, out);
+  return true;
 });
