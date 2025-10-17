@@ -10,14 +10,16 @@ const folderTreeEl = document.getElementById("folderTree");
 let projectPath = null;
 let files = [];
 let selected = new Set();
+let deselected = new Set();
 
 // Подсветка выбранных элементов
 function highlightSelection() {
   const lis = folderTreeEl.querySelectorAll("li");
   lis.forEach(li => {
     const fullPath = li.dataset.fullPath;
+    li.classList.remove("selected", "deselected");
     if (selected.has(fullPath)) li.classList.add("selected");
-    else li.classList.remove("selected");
+    if (deselected.has(fullPath)) li.classList.add("deselected");
   });
 }
 
@@ -58,10 +60,12 @@ function renderTree(node, basePath = "") {
           // папка уже выбрана → снимаем выбор у папки и её файлов
           selected.delete(fullPath);
           matched.forEach(f => selected.delete(f));
+          matched.forEach(f => deselected.delete(f)); // сбрасываем исключения
         } else {
           // папка не выбрана → добавляем папку и все её файлы
           selected.add(fullPath);
           matched.forEach(f => selected.add(f));
+          matched.forEach(f => deselected.delete(f)); // сбрасываем исключения
         }
 
         highlightSelection();
@@ -73,8 +77,15 @@ function renderTree(node, basePath = "") {
       li.addEventListener("click", (e) => {
         e.stopPropagation();
         if (selected.has(fullPath)) {
+          // файл был выбран напрямую → снимаем
           selected.delete(fullPath);
+          deselected.add(fullPath);
+        } else if (deselected.has(fullPath)) {
+          // файл был снят вручную → возвращаем
+          deselected.delete(fullPath);
+          selected.add(fullPath);
         } else {
+          // файл не был ни в selected, ни в deselected → выбираем
           selected.add(fullPath);
         }
         highlightSelection();
@@ -141,6 +152,8 @@ btnExport.addEventListener("click", async () => {
       });
     }
   });
+
+  deselected.forEach(f => selectedFiles.delete(f));
 
   const chosen = Array.from(selectedFiles);
   if (chosen.length === 0) {
