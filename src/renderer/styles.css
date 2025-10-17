@@ -5,3 +5,4 @@ section { padding: 16px 24px; }
 #fileList li { border-bottom: 1px solid #eee; padding: 6px 8px; display: flex; align-items: center; gap: 8px; }
 #projectPath { margin-left: 12px; font-weight: 600; }
 #status { margin-top: 12px; color: #555; }
+.actions { margin-bottom: 8px; display: flex; gap: 8px; }
