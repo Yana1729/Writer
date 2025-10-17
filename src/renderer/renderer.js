@@ -4,6 +4,9 @@ const btnScan = document.getElementById("btnScan");
 const fileList = document.getElementById("fileList");
 const btnExport = document.getElementById("btnExport");
 const statusEl = document.getElementById("status");
+const selectAllBtn = document.getElementById("selectAll");
+const clearSelectionBtn = document.getElementById("clearSelection");
+const selectByFolderBtn = document.getElementById("selectByFolder");
 
 let projectPath = null;
 let files = [];
@@ -57,4 +60,34 @@ btnExport.addEventListener("click", async () => {
     await window.api.exportHtml(projectPath, chosen, outputPath);
   }
   statusEl.textContent = `Готово: ${outputPath}`;
+});
+
+selectAllBtn.addEventListener("click", () => {
+  selected = new Set(files);
+  renderList();
+});
+
+clearSelectionBtn.addEventListener("click", () => {
+  selected.clear();
+  renderList();
+});
+
+selectByFolderBtn.addEventListener("click", () => {
+  if (files.length === 0) {
+    statusEl.textContent = "Нет файлов для выбора.";
+    return;
+  }
+
+  // собираем список папок
+  const folders = Array.from(
+    new Set(files.map(f => f.split(path.sep)[0]))
+  );
+
+  // простое окно выбора папки
+  const folder = prompt("Введите имя папки для выбора:\n" + folders.join("\n"));
+  if (!folder) return;
+
+  const matched = files.filter(f => f.startsWith(folder + path.sep) || f === folder);
+  matched.forEach(f => selected.add(f));
+  renderList();
 });
