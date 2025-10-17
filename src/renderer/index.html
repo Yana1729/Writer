@@ -1,35 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <title>Project Exporter</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta charset="UTF-8">
+  <title>Code Exporter</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header><h1>Экспорт кода проекта</h1></header>
+  <div class="container">
+    <!-- Левая панель: дерево -->
+    <aside class="sidebar">
+      <h3>📂 Файлы проекта</h3>
+      <div id="folderTree" class="tree"></div>
+    </aside>
 
-  <section>
-    <button id="btnPickFolder">Выбрать папку проекта</button>
-    <span id="projectPath"></span>
-  </section>
+    <!-- Правая панель: управление -->
+    <main class="main">
+      <div class="controls">
+        <button id="btnPickFolder">📁 Выбрать папку</button>
+        <span id="projectPath"></span>
+      </div>
 
-  <section>
-    <button id="btnScan">Сканировать файлы</button>
-    <div class="actions">
-      <button id="selectAll">Выбрать все</button>
-      <button id="clearSelection">Очистить выбор</button>
-      <button id="selectByFolder">Выбрать по папке</button>
-    </div>
-    <div id="folderTree" class="tree"></div>
-  </section>
+      <div class="controls">
+        <button id="btnScan">🔍 Сканировать</button>
+        <button id="selectAll">✅ Выбрать все</button>
+        <button id="clearSelection">❌ Очистить</button>
+      </div>
 
-  <section>
-    <label><input type="radio" name="format" value="docx" checked /> DOCX</label>
-    <label><input type="radio" name="format" value="html" /> HTML</label>
-    <button id="btnExport">Экспорт</button>
-    <div id="status"></div>
-  </section>
+      <div class="export">
+        <label><input type="radio" name="format" value="docx" checked> DOCX</label>
+        <label><input type="radio" name="format" value="html"> HTML</label>
+        <button id="btnExport">💾 Экспорт</button>
+      </div>
 
-  <script type="module" src="./renderer.js"></script>
+      <div id="status" class="status"></div>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
 </body>
 </html>
