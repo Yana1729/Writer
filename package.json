@@ -1,0 +1,13 @@
+{
+  "name": "project-exporter",
+  "version": "1.0.0",
+  "main": "src/main/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ./src/main/main.js"
+  },
+  "dependencies": {
+    "docx": "^8.0.0",
+    "electron": "^31.0.0"
+  }
+}
