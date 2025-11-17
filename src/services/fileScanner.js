@@ -5,7 +5,7 @@ export function cleanText(text) {
   return text.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F]/g, "");
 }
 
-export function scanFiles(projectPath, extensions = [".ts", ".js", ".json", ".md", ".env", ".sql", ".gitignore"], excludeDirs = new Set(["node_modules", "dist", ".vscode"])) {
+export function scanFiles(projectPath, extensions = [".ts", ".js", ".json", ".md", ".env", ".sql", ".gitignore", ".html", ".css"], excludeDirs = new Set(["node_modules", "dist", ".vscode"])) {
   const result = [];
   function walk(dir) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
